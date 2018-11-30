@@ -10,8 +10,8 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.game.ozanne.gameoz.AppLifeCycleObserver;
-import com.game.ozanne.gameoz.GameActivity.Model.GenerateGridGame;
-import com.game.ozanne.gameoz.GameActivity.Model.POJO.GameObjectGrid;
+import com.game.ozanne.gameoz.GameActivity.Model.ManagerGridGame;
+import com.game.ozanne.gameoz.GameActivity.Model.POJO.GameObject;
 import com.game.ozanne.gameoz.R;
 import com.game.ozanne.gameoz.remoteDataSource.RemoteDataSource;
 import com.game.ozanne.gameoz.repository.Repository;
@@ -31,6 +31,8 @@ public class GameView extends AppCompatActivity implements GameContract.ViewGame
     private List<LinearLayout> linearLayouts;
     private GameContract.PresenterGame mPresenter;
 
+    ManagerGridGame managerGridGame;
+
     private static final String TAG = GameView.class.getName();
 
     @Override
@@ -44,6 +46,8 @@ public class GameView extends AppCompatActivity implements GameContract.ViewGame
                 , this,
                 this);
 
+
+         managerGridGame = new ManagerGridGame(this,grid);
 
     }
 
@@ -72,13 +76,13 @@ public class GameView extends AppCompatActivity implements GameContract.ViewGame
         String json = (String) args[0].toString();
       //  Log.i("JsonTest", json);
         Gson gson = new Gson();
-        final GameObjectGrid gameObjectGrid = gson.fromJson(json,GameObjectGrid.class);
+        final GameObject gameObject = gson.fromJson(json,GameObject.class);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
 
                 // Stuff that updates the UI
-               // Log.i("JsonTest",   gameObjectGrid.getUserNameOne());
+               // Log.i("JsonTest",   gameObject.getUserNameOne());
 
 
             }
@@ -87,13 +91,17 @@ public class GameView extends AppCompatActivity implements GameContract.ViewGame
 
     @Override
     public void onNewAction(Object... args) {
-        String json = (String) args[0].toString();
+        final String json = (String) args[0].toString();
         Gson gson = new Gson();
-        final GameObjectGrid gameObjectGrid = gson.fromJson(json,GameObjectGrid.class);
+        final GameObject gameObject = gson.fromJson(json,GameObject.class);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 // Stuff that updates the UI
+
+
+                managerGridGame.checkDiffGameObject(gameObject);
+
             }
         });
     }
@@ -149,9 +157,8 @@ public class GameView extends AppCompatActivity implements GameContract.ViewGame
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
 
-
-        GenerateGridGame generateGridGame = new GenerateGridGame(getApplicationContext(),grid,null);
-        generateGridGame.generateGridLayout();
+       // ManagerGridGame managerGridGame = new ManagerGridGame(getApplicationContext(),grid,null);
+      //  managerGridGame.checkDiffGameObject();
 
     }
 }

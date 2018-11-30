@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class GameObjectGrid {
+public class GameObject {
     @SerializedName("playerTurn")
     @Expose
     private Boolean playerTurn;
@@ -19,7 +19,19 @@ public class GameObjectGrid {
     @Expose
     private String userNameTwo;
 
-    public GameObjectGrid() {
+    @SerializedName("color")
+    @Expose
+    private String colorPlayer;
+
+    public GameObject() {
+    }
+
+    public String getColorPlayer() {
+        return colorPlayer;
+    }
+
+    public void setColorPlayer(String colorPlayer) {
+        this.colorPlayer = colorPlayer;
     }
 
     public Boolean getPlayerTurn() {
