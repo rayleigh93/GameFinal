@@ -1,20 +1,12 @@
 package com.game.ozanne.gameoz;
 
-import android.app.Activity;
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.OnLifecycleEvent;
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.game.ozanne.gameoz.GameActivity.GameView;
-import com.game.ozanne.gameoz.MainActivity.MainViewImpl;
 import com.game.ozanne.gameoz.serviceSocketIO.EventServiceImpl;
-
-import java.net.URISyntaxException;
-
-import okhttp3.internal.Util;
 
 public class AppLifeCycleObserver implements LifecycleObserver {
 

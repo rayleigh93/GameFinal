@@ -1,4 +1,4 @@
-package com.game.ozanne.gameoz.GameActivity;
+package com.game.ozanne.gameoz.GameActivity.Presenter;
 
 public interface GameBasePresenter {
 

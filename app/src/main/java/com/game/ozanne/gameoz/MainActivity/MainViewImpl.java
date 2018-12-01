@@ -1,22 +1,16 @@
 package com.game.ozanne.gameoz.MainActivity;
 
 
-import android.arch.lifecycle.ProcessLifecycleOwner;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.game.ozanne.gameoz.AppLifeCycleObserver;
-import com.game.ozanne.gameoz.GameActivity.GameView;
+import com.game.ozanne.gameoz.GameActivity.View.GameView;
 import com.game.ozanne.gameoz.R;
 import com.game.ozanne.gameoz.remoteDataSource.RemoteDataSource;
 import com.game.ozanne.gameoz.repository.Repository;
-import com.game.ozanne.gameoz.serviceSocketIO.EventServiceImpl;
 
 import java.net.URISyntaxException;
 

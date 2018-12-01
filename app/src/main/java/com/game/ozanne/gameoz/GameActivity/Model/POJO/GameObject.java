@@ -1,9 +1,13 @@
 package com.game.ozanne.gameoz.GameActivity.Model.POJO;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+import java.util.Objects;
 
 public class GameObject {
     @SerializedName("playerTurn")
@@ -65,4 +69,21 @@ public class GameObject {
     public void setUserNameTwo(String userNameTwo) {
         this.userNameTwo = userNameTwo;
     }
+
+
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GameObject that = (GameObject) o;
+        return Objects.equals(playerTurn, that.playerTurn) &&
+                Objects.equals(tableauGame, that.tableauGame) &&
+                Objects.equals(userNameOne, that.userNameOne) &&
+                Objects.equals(userNameTwo, that.userNameTwo) &&
+                Objects.equals(colorPlayer, that.colorPlayer);
+    }
+
+
 }

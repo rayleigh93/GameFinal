@@ -1,7 +1,8 @@
-package com.game.ozanne.gameoz.GameActivity;
+package com.game.ozanne.gameoz.GameActivity.View;
 
 
 import android.arch.lifecycle.ProcessLifecycleOwner;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -10,7 +11,9 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.game.ozanne.gameoz.AppLifeCycleObserver;
-import com.game.ozanne.gameoz.GameActivity.Model.ManagerGridGame;
+import com.game.ozanne.gameoz.GameActivity.GameContract;
+import com.game.ozanne.gameoz.GameActivity.Presenter.GamePresenter;
+import com.game.ozanne.gameoz.GameActivity.Model.GridGameManager;
 import com.game.ozanne.gameoz.GameActivity.Model.POJO.GameObject;
 import com.game.ozanne.gameoz.R;
 import com.game.ozanne.gameoz.remoteDataSource.RemoteDataSource;
@@ -24,16 +27,15 @@ import butterknife.ButterKnife;
 
 public class GameView extends AppCompatActivity implements GameContract.ViewGame {
 
-
     @BindView(R.id.grid)
     RelativeLayout grid;
 
-    private List<LinearLayout> linearLayouts;
     private GameContract.PresenterGame mPresenter;
 
-    ManagerGridGame managerGridGame;
+    GridGameView gridGameView;
 
     private static final String TAG = GameView.class.getName();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +49,6 @@ public class GameView extends AppCompatActivity implements GameContract.ViewGame
                 this);
 
 
-         managerGridGame = new ManagerGridGame(this,grid);
 
     }
 
@@ -98,10 +99,14 @@ public class GameView extends AppCompatActivity implements GameContract.ViewGame
             @Override
             public void run() {
                 // Stuff that updates the UI
+                // Si il y a aucun gridgameView on le crée, sinon on l'update
+                // il faut voir si les deux gameobject sont diff
+                if(mPresenter.checkDiffGameObject(gameObject)){
+                    updateUI();
+                }
+                else {
 
-
-                managerGridGame.checkDiffGameObject(gameObject);
-
+                }
             }
         });
     }
@@ -114,8 +119,6 @@ public class GameView extends AppCompatActivity implements GameContract.ViewGame
 
     @Override
     public void initView() {
-        ButterKnife.bind(this);
-
         // Observer to detect if the app is in background or foreground.
         AppLifeCycleObserver lifeCycleObserver
                 = new AppLifeCycleObserver(getApplicationContext());
@@ -125,15 +128,7 @@ public class GameView extends AppCompatActivity implements GameContract.ViewGame
                 .getLifecycle()
                 .addObserver(lifeCycleObserver);
 
-
-
-
-    }
-
-    @Override
-    public void clickOnCase(int position) {
-        mPresenter.sendAction(position);
-        Log.i("TOTO", Integer.toString(position));
+        mPresenter.initGridGameManager(grid, this);
     }
 
     @Override
@@ -150,15 +145,30 @@ public class GameView extends AppCompatActivity implements GameContract.ViewGame
     }
 
 
+    public void updateUI()
+    {
+        this.grid.addView(this.gridGameView.getmLayoutParent());
+
+//            for (int i = 0; i < this.gridGameView.getmListLayout().size(); i++) {
+//                this.grid.addView(this.gridGameView.getmListLayout().get(i));
+//            }
+
+    }
 
 
-    // Quand l'UI à été loaded
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
+    public GridGameView getGridGameView() {
+        return gridGameView;
+    }
 
-       // ManagerGridGame managerGridGame = new ManagerGridGame(getApplicationContext(),grid,null);
-      //  managerGridGame.checkDiffGameObject();
+    public void setGridGameView(GridGameView gridGameView) {
+        this.gridGameView = gridGameView;
+    }
 
+    public RelativeLayout getGrid() {
+        return grid;
+    }
+
+    public void setGrid(RelativeLayout grid) {
+        this.grid = grid;
     }
 }

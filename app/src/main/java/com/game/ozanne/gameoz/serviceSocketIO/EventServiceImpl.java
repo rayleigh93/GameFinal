@@ -165,7 +165,7 @@ public class EventServiceImpl implements EventService {
     private Emitter.Listener onNewAction = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-            Log.i(TAG, "call: onPlayerPlay" );
+          //  Log.i(TAG, "call: onPlayerPlay" );
             if (mEventListener != null) mEventListener.onNewAction(args);
         }
     };
@@ -174,13 +174,7 @@ public class EventServiceImpl implements EventService {
 
 
 
-    // PAS BIEN IMPLEMENTER DANS LA STRUCTURE ET DONC A CHANGER !!!
 
-
-
-    public static Socket getmSocket() {
-        return mSocket;
-    }
 
 
 }
