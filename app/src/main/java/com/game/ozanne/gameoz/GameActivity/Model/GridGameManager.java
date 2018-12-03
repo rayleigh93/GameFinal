@@ -65,8 +65,6 @@ public class GridGameManager {
 
 
         initializeImageViewGrid(gameObject,gridView);
-
-        Log.i("TEST","size : "+gridView.getmListLayout().size());
         return gridView;
     }
 
@@ -87,26 +85,29 @@ public class GridGameManager {
     }
 
 
-
-
-
     // Quand on clique sur une case on update l'UI
     public void updateGridLayoutWithCaseAvaible(CaseAvailable caseAvailable,GridGameView gridGameView,GameObject gameObject){
+
+        // Refresh les cases cliquable d'abord
+       // refreshGridFromAvailableCase(gridGameView,gameObject);
 
         if(caseAvailable.getTableauPositionAvailable().size() > 0){
             for(int i = 0; i<caseAvailable.getTableauPositionAvailable().size();i++){
                 gridGameView.getmListImageView().get(caseAvailable.tableauPositionAvailable.get(i)).setImageResource(R.drawable.ic_launcher_foreground);
             }
 
-        }else {
-            for(int i = 0; i<gridGameView.getmListImageView().size();i++){
-                if(gameObject.getTableauGame().get(i).getTypeCase().equals("vide")) {
-                    gridGameView.getmListImageView().get(i).setImageResource(0);
-                }
-            }
         }
 
 
+    }
+
+
+    public void refreshGridFromAvailableCase(GridGameView gridGameView,GameObject gameObject){
+        for(int i = 0; i<gridGameView.getmListImageView().size();i++){
+            if(gameObject.getTableauGame().get(i).getTypeCase().equals("vide")) {
+                gridGameView.getmListImageView().get(i).setImageResource(0);
+            }
+        }
     }
 
 

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.RelativeLayout;
 
 import com.game.ozanne.gameoz.GameActivity.GameContract;
+import com.game.ozanne.gameoz.GameActivity.Model.ActionFromUser;
 import com.game.ozanne.gameoz.GameActivity.Model.CaseAvailable;
 import com.game.ozanne.gameoz.GameActivity.Model.GameManager;
 import com.game.ozanne.gameoz.GameActivity.Model.GridGameManager;
@@ -15,13 +16,16 @@ import com.game.ozanne.gameoz.GameActivity.Model.POJO.GameObject;
 import com.game.ozanne.gameoz.repository.Repository;
 import com.game.ozanne.gameoz.serviceSocketIO.EventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-public class GamePresenter implements GameContract.PresenterGame {
+public class GamePresenter implements GameContract.PresenterGame,ActionFromUser {
 
     @NonNull
     private final Repository mRepository;
@@ -50,7 +54,7 @@ public class GamePresenter implements GameContract.PresenterGame {
         // events to the view
         mRepository.setEventListener(this);
 
-        this.gameManager = new GameManager(this);
+        this.gameManager = new GameManager(this,this);
 
         mCompositeDisposable = new CompositeDisposable();
         mView.setPresenter(this);
@@ -89,26 +93,24 @@ public class GamePresenter implements GameContract.PresenterGame {
     }
 
     @Override
-    public void sendAction(Integer position) {
+    public void sendAction(List<Integer> position) {
         Disposable disposable = mRepository.sendAction(position)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(Schedulers.io())
-                .subscribe(new Consumer<Integer>() {
+                .subscribe(new Consumer<List<Integer>>() {
                     @Override
-                    public void accept(Integer integer) throws Exception {
-                            mView.onActionSend();
+                    public void accept(List<Integer> integers) throws Exception {
+                        mView.onActionSend();
                     }
+
                 });
             mCompositeDisposable.add(disposable);
     }
-
 
     public void initGridGameManager(RelativeLayout relativeLayout, Context context){
         // initialisation du gridGameManager
         gridGameManager = new GridGameManager(context,this);
     }
-
-
 
     // a chaque reception du JSON GAME OBJECT
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -126,19 +128,24 @@ public class GamePresenter implements GameContract.PresenterGame {
 
     }
 
-
     @Override
     public void clickOnCase(int position) {
             // Agir avec le game Manager
+            gridGameManager.refreshGridFromAvailableCase(mView.getGridGameView(),gameManager.getmGameObject());
             gameManager.clickOnCase(position);
+
     }
-
-
 
     @Override
     public void sendCaseAvailable(CaseAvailable caseAvailable) {
             gridGameManager.updateGridLayoutWithCaseAvaible(caseAvailable,mView.getGridGameView(),gameManager.getmGameObject());
     }
 
-
+    @Override
+    public void sendPosition(int position,int positionBase) {
+        List<Integer> list = new ArrayList<>();
+        list.add(position);
+        list.add(positionBase);
+        sendAction(list);
+    }
 }

@@ -1,6 +1,7 @@
 package com.game.ozanne.gameoz.serviceSocketIO;
 
 import java.net.URISyntaxException;
+import java.util.List;
 
 import io.reactivex.Flowable;
 
@@ -11,7 +12,7 @@ public interface EventService {
 
     void disconnect();
 
-    Flowable<Integer> sendAction(Integer position);
+    Flowable<List<Integer>> sendAction(List<Integer> position);
 
     void setEventListener(EventListener eventListener);
 

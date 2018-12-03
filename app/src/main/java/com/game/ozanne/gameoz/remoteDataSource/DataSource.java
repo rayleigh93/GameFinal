@@ -4,6 +4,7 @@ import com.game.ozanne.gameoz.serviceSocketIO.EventListener;
 import com.game.ozanne.gameoz.serviceSocketIO.EventService;
 
 import java.net.URISyntaxException;
+import java.util.List;
 
 import io.reactivex.Flowable;
 
@@ -20,7 +21,7 @@ public interface DataSource extends EventListener {
 
     void setEventListener(EventListener eventListener);
 
-    Flowable<Integer> sendAction(Integer position);
+    Flowable<List<Integer>> sendAction(List<Integer> position);
 
     EventService getmEventService();
 

@@ -3,6 +3,7 @@ package com.game.ozanne.gameoz.serviceSocketIO;
 import android.util.Log;
 
 import java.net.URISyntaxException;
+import java.util.List;
 
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
@@ -92,13 +93,14 @@ public class EventServiceImpl implements EventService {
     }
 
 
+
     @Override
-    public Flowable<Integer> sendAction(final Integer position) {
-        return Flowable.create(new FlowableOnSubscribe<Integer>() {
+    public Flowable<List<Integer>> sendAction(final List<Integer> position) {
+        return Flowable.create(new FlowableOnSubscribe<List<Integer>>() {
             @Override
-            public void subscribe(FlowableEmitter<Integer> emitter) throws Exception {
+            public void subscribe(FlowableEmitter<List<Integer>> emitter) throws Exception {
                 mSocket.emit(EMIT_SEND_ACTION, position);
-               emitter.onNext(position);
+                emitter.onNext(position);
             }
         }, BackpressureStrategy.BUFFER);
     }

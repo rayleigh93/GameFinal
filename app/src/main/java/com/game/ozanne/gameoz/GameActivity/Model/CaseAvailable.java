@@ -7,10 +7,12 @@ public class CaseAvailable {
 
 
     List<Integer> tableauPositionAvailable;
+    int positionCaseBase;
 
 
     public CaseAvailable() {
         this.tableauPositionAvailable = new ArrayList<>();
+        this.positionCaseBase = -1;
     }
 
 
@@ -20,5 +22,14 @@ public class CaseAvailable {
 
     public void setTableauPositionAvailable(List<Integer> tableauPositionAvailable) {
         this.tableauPositionAvailable = tableauPositionAvailable;
+    }
+
+
+    public int getPositionCaseBase() {
+        return positionCaseBase;
+    }
+
+    public void setPositionCaseBase(int positionCaseBase) {
+        this.positionCaseBase = positionCaseBase;
     }
 }

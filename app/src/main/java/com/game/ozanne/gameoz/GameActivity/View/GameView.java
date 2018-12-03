@@ -36,7 +36,6 @@ public class GameView extends AppCompatActivity implements GameContract.ViewGame
 
     private static final String TAG = GameView.class.getName();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,7 +110,6 @@ public class GameView extends AppCompatActivity implements GameContract.ViewGame
         });
     }
 
-
     @Override
     public void setPresenter(GameContract.PresenterGame presenter) {
         mPresenter = presenter;
@@ -144,17 +142,10 @@ public class GameView extends AppCompatActivity implements GameContract.ViewGame
 
     }
 
-
     public void updateUI()
     {
         this.grid.addView(this.gridGameView.getmLayoutParent());
-
-//            for (int i = 0; i < this.gridGameView.getmListLayout().size(); i++) {
-//                this.grid.addView(this.gridGameView.getmListLayout().get(i));
-//            }
-
     }
-
 
     public GridGameView getGridGameView() {
         return gridGameView;

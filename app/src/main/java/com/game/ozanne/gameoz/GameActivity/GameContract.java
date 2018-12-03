@@ -12,6 +12,8 @@ import com.game.ozanne.gameoz.GameActivity.Presenter.GameBasePresenter;
 import com.game.ozanne.gameoz.GameActivity.View.GameBaseView;
 import com.game.ozanne.gameoz.serviceSocketIO.EventListener;
 
+import java.util.List;
+
 public interface GameContract {
 
 
@@ -26,7 +28,7 @@ public interface GameContract {
     interface PresenterGame extends GameBasePresenter, EventListener, ClickOnCaseGrilleGame,CaseAvailableListener {
 
         // Action à envoyé
-        void sendAction(Integer position);
+        void sendAction(List<Integer> position);
 
        void  initGridGameManager(RelativeLayout relativeLayout, Context context);
        boolean checkDiffGameObject(GameObject gameObject);

@@ -7,6 +7,7 @@ import com.game.ozanne.gameoz.serviceSocketIO.EventListener;
 import com.game.ozanne.gameoz.serviceSocketIO.EventService;
 
 import java.net.URISyntaxException;
+import java.util.List;
 
 import io.reactivex.Flowable;
 
@@ -49,7 +50,7 @@ public class Repository implements DataSource {
     }
 
     @Override
-    public Flowable<Integer> sendAction(Integer position) {
+    public Flowable<List<Integer>> sendAction(List<Integer> position) {
         return mRemoteDataSource.sendAction(position);
     }
 
